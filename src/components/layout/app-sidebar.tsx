@@ -10,7 +10,6 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -18,44 +17,41 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-  SidebarRail
+  SidebarRail,
+  SidebarTrigger,
+  useSidebar
 } from '@/components/ui/sidebar';
 
 import { navItems } from '@/constants/data';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { useUser } from '@clerk/nextjs';
+
 import { IconChevronRight } from '@tabler/icons-react';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import * as React from 'react';
 import { Icons } from '../icons';
-import Image from 'next/image';
 
 export default function AppSidebar() {
   const pathname = usePathname();
   const { isOpen } = useMediaQuery();
-  const { user } = useUser();
-  const router = useRouter();
+  const { state } = useSidebar();
 
   React.useEffect(() => {
     // Side effects based on sidebar state changes
   }, [isOpen]);
 
   return (
-    <Sidebar collapsible='icon'>
-      <SidebarHeader>
-        <Image
-          src='/ken.svg'
-          alt='Ken Logo'
-          width={100}
-          height={100}
-          className='p-2'
-        />
+    <Sidebar collapsible='icon' variant='inset'>
+      <SidebarHeader className='overflow-x-hidden'>
+        <SidebarGroup className='flex flex-row justify-between'>
+          {state === 'expanded' && <span>Menu</span>}
+          <SidebarTrigger />
+        </SidebarGroup>
       </SidebarHeader>
-      <SidebarContent className='overflow-x-hidden'>
+
+      <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Overview</SidebarGroupLabel>
           <SidebarMenu>
             {navItems.map((item) => {
               const Icon = item.icon ? Icons[item.icon] : Icons.logo;
@@ -67,6 +63,8 @@ export default function AppSidebar() {
                   className='group/collapsible'
                 >
                   <SidebarMenuItem>
+                    {/* Collapsible trigger that toggles the visibility of sub-items */}
+
                     <CollapsibleTrigger asChild>
                       <SidebarMenuButton
                         tooltip={item.title}
@@ -77,6 +75,7 @@ export default function AppSidebar() {
                         <IconChevronRight className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
                       </SidebarMenuButton>
                     </CollapsibleTrigger>
+
                     <CollapsibleContent>
                       <SidebarMenuSub>
                         {item.items?.map((subItem) => (
@@ -113,6 +112,7 @@ export default function AppSidebar() {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
+
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -130,7 +130,6 @@ export default function AppSidebar() {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
-      <SidebarRail />
     </Sidebar>
   );
 }
