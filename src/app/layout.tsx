@@ -9,6 +9,7 @@ import NextTopLoader from 'nextjs-toploader';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import './globals.css';
 import './theme.css';
+import { HeroHighlight } from '@/components/ui/hero-highlight';
 
 const META_THEME_COLORS = {
   light: '#ffffff',
@@ -16,8 +17,8 @@ const META_THEME_COLORS = {
 };
 
 export const metadata: Metadata = {
-  title: 'Next Shadcn',
-  description: 'Basic dashboard with Next.js and Shadcn'
+  title: 'Ken Tehnology',
+  description: 'Email Marketing done right.'
 };
 
 export const viewport: Viewport = {
@@ -56,21 +57,24 @@ export default async function RootLayout({
           fontVariables
         )}
       >
-        <NextTopLoader showSpinner={false} />
-        <NuqsAdapter>
-          <ThemeProvider
-            attribute='class'
-            defaultTheme='system'
-            enableSystem
-            disableTransitionOnChange
-            enableColorScheme
-          >
-            <Providers activeThemeValue={activeThemeValue as string}>
-              <Toaster />
-              {children}
-            </Providers>
-          </ThemeProvider>
-        </NuqsAdapter>
+        <HeroHighlight>
+          <NextTopLoader showSpinner={false} />
+          <NuqsAdapter>
+            <ThemeProvider
+              attribute='class'
+              // TO DO! implemnet the dark theme too
+              defaultTheme='light'
+              enableSystem
+              disableTransitionOnChange
+              enableColorScheme
+            >
+              <Providers activeThemeValue={activeThemeValue as string}>
+                <Toaster />
+                {children}
+              </Providers>
+            </ThemeProvider>
+          </NuqsAdapter>
+        </HeroHighlight>
       </body>
     </html>
   );
