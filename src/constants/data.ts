@@ -14,47 +14,59 @@ export type Product = {
 //Info: The following data is used for the sidebar navigation and Cmd K bar.
 export const navItems: NavItem[] = [
   {
-    title: 'Dashboard',
-    url: '/dashboard/overview',
-    icon: 'dashboard',
+    title: 'Clients',
+    url: '/dashboard/clients',
+    icon: 'clients',
     isActive: false,
-    shortcut: ['d', 'd'],
+    shortcut: ['c', 'l'],
     items: [] // Empty array as there are no child items for Dashboard
   },
   {
-    title: 'Product',
-    url: '/dashboard/product',
-    icon: 'product',
-    shortcut: ['p', 'p'],
+    title: 'Campaigns',
+    url: '/dashboard/campaigns',
+    icon: 'campaigns',
+    shortcut: ['c', 'a'],
     isActive: false,
     items: [] // No child items
   },
   {
-    title: 'Account',
-    url: '#', // Placeholder as there is no direct link for the parent
-    icon: 'billing',
-    isActive: true,
-
-    items: [
-      {
-        title: 'Profile',
-        url: '/dashboard/profile',
-        icon: 'userPen',
-        shortcut: ['m', 'm']
-      },
-      {
-        title: 'Login',
-        shortcut: ['l', 'l'],
-        url: '/',
-        icon: 'login'
-      }
-    ]
+    title: 'Lists',
+    url: '/dashboard/lists', // Placeholder as there is no direct link for the parent
+    icon: 'lists',
+    isActive: false,
+    shortcut: ['l', 'i'],
+    items: []
   },
   {
-    title: 'Kanban',
-    url: '/dashboard/kanban',
-    icon: 'kanban',
-    shortcut: ['k', 'k'],
+    title: 'Prompts',
+    url: '/dashboard/prompts',
+    icon: 'prompts',
+    shortcut: ['p', 'r'],
+    isActive: false,
+    items: [] // No child items
+  },
+
+  {
+    title: 'Contacts',
+    url: '/dashboard/contacts',
+    icon: 'contacts',
+    shortcut: ['c', 'o'],
+    isActive: false,
+    items: [] // No child items
+  },
+  {
+    title: 'Companies',
+    url: '/dashboard/companies',
+    icon: 'companies',
+    shortcut: ['c', 'm'],
+    isActive: false,
+    items: [] // No child items
+  },
+  {
+    title: 'domains',
+    url: '/dashboard/domains',
+    icon: 'domains',
+    shortcut: ['d', 'o'],
     isActive: false,
     items: [] // No child items
   }

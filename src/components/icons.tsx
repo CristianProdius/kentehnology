@@ -5,17 +5,14 @@ import {
   IconChevronLeft,
   IconChevronRight,
   IconCommand,
-  IconCreditCard,
   IconFile,
   IconFileText,
   IconHelpCircle,
   IconPhoto,
   IconDeviceLaptop,
-  IconLayoutDashboard,
   IconLoader2,
   IconLogin,
   IconProps,
-  IconShoppingBag,
   IconMoon,
   IconDotsVertical,
   IconPizza,
@@ -29,20 +26,31 @@ import {
   IconUserEdit,
   IconUserX,
   IconX,
-  IconLayoutKanban,
   IconBrandGithub
 } from '@tabler/icons-react';
+import {
+  Asterisk,
+  Building2,
+  List,
+  Mail,
+  Search,
+  Server,
+  User2
+} from 'lucide-react';
 
 export type Icon = React.ComponentType<IconProps>;
 
 export const Icons = {
-  dashboard: IconLayoutDashboard,
+  clients: User2,
   logo: IconCommand,
   login: IconLogin,
   close: IconX,
-  product: IconShoppingBag,
+  campaigns: Mail,
   spinner: IconLoader2,
-  kanban: IconLayoutKanban,
+  prompts: Asterisk,
+  contacts: List,
+  companies: Building2,
+  domains: Server,
   chevronLeft: IconChevronLeft,
   chevronRight: IconChevronRight,
   trash: IconTrash,
@@ -53,7 +61,7 @@ export const Icons = {
   user2: IconUserCircle,
   media: IconPhoto,
   settings: IconSettings,
-  billing: IconCreditCard,
+  lists: Search,
   ellipsis: IconDotsVertical,
   add: IconPlus,
   warning: IconAlertTriangle,
