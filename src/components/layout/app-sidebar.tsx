@@ -42,8 +42,12 @@ export default function AppSidebar() {
   }, [isOpen]);
 
   return (
-    <Sidebar collapsible='icon' variant='inset'>
-      <SidebarHeader className='overflow-x-hidden'>
+    <Sidebar
+      collapsible='icon'
+      variant='inset'
+      className='border-sidebar-foreground bg-sidebar h-full overflow-hidden rounded-4xl border-3'
+    >
+      <SidebarHeader className='flex-shrink-0 overflow-x-hidden'>
         <SidebarGroup className='flex flex-row justify-between'>
           {state === 'expanded' && <span>Menu</span>}
           <SidebarTrigger />
@@ -113,7 +117,7 @@ export default function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter>
+      <SidebarFooter className='flex-shrink-0'>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton

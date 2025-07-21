@@ -20,16 +20,18 @@ export default async function DashboardLayout({
   const defaultOpen = cookieStore.get('sidebar_state')?.value === 'true';
   return (
     <KBar>
-      <div className='flex h-svh p-10'>
+      <div className='flex h-screen overflow-hidden p-10'>
         <SidebarProvider
           defaultOpen={defaultOpen}
-          className='flex flex-1 flex-col'
+          className='flex flex-1 flex-col gap-3'
         >
           <Header />
 
-          <div className='relative flex flex-1 flex-row'>
+          <div className='relative flex min-h-0 flex-1 flex-row gap-3 p-2'>
             <AppSidebar />
-            <SidebarInset>{children}</SidebarInset>
+            <SidebarInset className='border-sidebar-foreground bg-sidebar overflow-hidden rounded-4xl border-3'>
+              {children}
+            </SidebarInset>
           </div>
         </SidebarProvider>
       </div>
