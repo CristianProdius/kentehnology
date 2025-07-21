@@ -10,7 +10,7 @@ import Image from 'next/image';
 
 export default function Header() {
   return (
-    <header className='bg-sidebar border-sidebar-foreground dark:border-sidebar-foreground/10 flex h-16 shrink-0 items-center justify-between gap-2 rounded-4xl border-3 shadow-sm shadow-black/5 dark:shadow-none'>
+    <header className='bg-sidebar border-sidebar-foreground dark:border-sidebar-foreground/10 flex h-16 shrink-0 items-center justify-between gap-2 rounded-[50px] border-3'>
       <div className='flex items-center gap-2 px-4'>
         <Image src='/ken.svg' alt='Logo' width={64} height={64} />
         <Separator orientation='vertical' className='mr-2 h-4' />

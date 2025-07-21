@@ -45,13 +45,19 @@ export default function AppSidebar() {
     <Sidebar
       collapsible='icon'
       variant='inset'
-      className='border-sidebar-foreground bg-sidebar h-full overflow-hidden rounded-4xl border-3'
+      className='border-sidebar-foreground bg-sidebar h-full overflow-hidden rounded-[50px] border-3'
     >
-      <SidebarHeader className='flex-shrink-0 overflow-x-hidden'>
-        <SidebarGroup className='flex flex-row justify-between'>
-          {state === 'expanded' && <span>Menu</span>}
-          <SidebarTrigger />
-        </SidebarGroup>
+      <SidebarHeader className='flex-shrink-0'>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <div className='flex w-full items-center justify-between px-2 py-2'>
+              {state === 'expanded' && (
+                <span className='text-sm font-medium'>Menu</span>
+              )}
+              <SidebarTrigger className='ml-auto h-7 w-7' />
+            </div>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarHeader>
 
       <SidebarContent>
@@ -118,21 +124,22 @@ export default function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className='flex-shrink-0'>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              size='lg'
-              tooltip='Settings'
-              isActive={pathname === '/dashboard/settings'}
-              asChild
-            >
-              <Link href='/dashboard/settings'>
-                <Icons.settings className='mr-2 h-5 w-5' />
-                <span>Settings</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <SidebarGroup>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                tooltip='Settings'
+                isActive={pathname === '/dashboard/settings'}
+                asChild
+              >
+                <Link href='/dashboard/settings'>
+                  <Icons.settings />
+                  <span>Settings</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarFooter>
     </Sidebar>
   );
