@@ -8,109 +8,115 @@ import { matchSorter } from 'match-sorter'; // For filtering
 export const delay = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
-// Define the shape of Product data
-export type Product = {
-  photo_url: string;
+// Define the shape of Client data
+export type Client = {
+  avatar_url: string;
   name: string;
-  description: string;
+  email: string;
+  phone: string;
+  company: string;
   created_at: string;
-  price: number;
   id: number;
-  category: string;
+  industry: string;
+  status: string;
   updated_at: string;
 };
 
-// Mock product data store
-export const fakeProducts = {
-  records: [] as Product[], // Holds the list of product objects
+// Mock client data store
+export const fakeClients = {
+  records: [] as Client[], // Holds the list of client objects
 
   // Initialize with sample data
   initialize() {
-    const sampleProducts: Product[] = [];
-    function generateRandomProductData(id: number): Product {
-      const categories = [
-        'Electronics',
-        'Furniture',
-        'Clothing',
-        'Toys',
-        'Groceries',
-        'Books',
-        'Jewelry',
-        'Beauty Products'
+    const sampleClients: Client[] = [];
+    function generateRandomClientData(id: number): Client {
+      const industries = [
+        'Technology',
+        'Healthcare',
+        'Finance',
+        'Retail',
+        'Manufacturing',
+        'Education',
+        'Real Estate',
+        'Consulting'
       ];
+
+      const statuses = ['Active', 'Inactive', 'Pending', 'Lead'];
 
       return {
         id,
-        name: faker.commerce.productName(),
-        description: faker.commerce.productDescription(),
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        phone: faker.phone.number(),
+        company: faker.company.name(),
         created_at: faker.date
           .between({ from: '2022-01-01', to: '2023-12-31' })
           .toISOString(),
-        price: parseFloat(faker.commerce.price({ min: 5, max: 500, dec: 2 })),
-        photo_url: `https://api.slingacademy.com/public/sample-products/${id}.png`,
-        category: faker.helpers.arrayElement(categories),
+        avatar_url: `https://i.pravatar.cc/150?img=${id}`,
+        industry: faker.helpers.arrayElement(industries),
+        status: faker.helpers.arrayElement(statuses),
         updated_at: faker.date.recent().toISOString()
       };
     }
 
     // Generate remaining records
     for (let i = 1; i <= 20; i++) {
-      sampleProducts.push(generateRandomProductData(i));
+      sampleClients.push(generateRandomClientData(i));
     }
 
-    this.records = sampleProducts;
+    this.records = sampleClients;
   },
 
-  // Get all products with optional category filtering and search
+  // Get all clients with optional industry filtering and search
   async getAll({
-    categories = [],
+    industries = [],
     search
   }: {
-    categories?: string[];
+    industries?: string[];
     search?: string;
   }) {
-    let products = [...this.records];
+    let clients = [...this.records];
 
-    // Filter products based on selected categories
-    if (categories.length > 0) {
-      products = products.filter((product) =>
-        categories.includes(product.category)
+    // Filter clients based on selected industries
+    if (industries.length > 0) {
+      clients = clients.filter((client) =>
+        industries.includes(client.industry)
       );
     }
 
     // Search functionality across multiple fields
     if (search) {
-      products = matchSorter(products, search, {
-        keys: ['name', 'description', 'category']
+      clients = matchSorter(clients, search, {
+        keys: ['name', 'email', 'company', 'industry']
       });
     }
 
-    return products;
+    return clients;
   },
 
-  // Get paginated results with optional category filtering and search
-  async getProducts({
+  // Get paginated results with optional industry filtering and search
+  async getClients({
     page = 1,
     limit = 10,
-    categories,
+    industries,
     search
   }: {
     page?: number;
     limit?: number;
-    categories?: string;
+    industries?: string;
     search?: string;
   }) {
     await delay(1000);
-    const categoriesArray = categories ? categories.split('.') : [];
-    const allProducts = await this.getAll({
-      categories: categoriesArray,
+    const industriesArray = industries ? industries.split('.') : [];
+    const allClients = await this.getAll({
+      industries: industriesArray,
       search
     });
-    const totalProducts = allProducts.length;
+    const totalClients = allClients.length;
 
     // Pagination logic
     const offset = (page - 1) * limit;
-    const paginatedProducts = allProducts.slice(offset, offset + limit);
+    const paginatedClients = allClients.slice(offset, offset + limit);
 
     // Mock current time
     const currentTime = new Date().toISOString();
@@ -120,24 +126,24 @@ export const fakeProducts = {
       success: true,
       time: currentTime,
       message: 'Sample data for testing and learning purposes',
-      total_products: totalProducts,
+      total_clients: totalClients,
       offset,
       limit,
-      products: paginatedProducts
+      clients: paginatedClients
     };
   },
 
-  // Get a specific product by its ID
-  async getProductById(id: number) {
+  // Get a specific client by its ID
+  async getClientById(id: number) {
     await delay(1000); // Simulate a delay
 
-    // Find the product by its ID
-    const product = this.records.find((product) => product.id === id);
+    // Find the client by its ID
+    const client = this.records.find((client) => client.id === id);
 
-    if (!product) {
+    if (!client) {
       return {
         success: false,
-        message: `Product with ID ${id} not found`
+        message: `Client with ID ${id} not found`
       };
     }
 
@@ -147,11 +153,11 @@ export const fakeProducts = {
     return {
       success: true,
       time: currentTime,
-      message: `Product with ID ${id} found`,
-      product
+      message: `Client with ID ${id} found`,
+      client
     };
   }
 };
 
-// Initialize sample products
-fakeProducts.initialize();
+// Initialize sample clients
+fakeClients.initialize();

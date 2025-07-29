@@ -2,12 +2,38 @@ import type { NextConfig } from 'next';
 import { withSentryConfig } from '@sentry/nextjs';
 
 // Define the base Next.js configuration
+//TODO the reomore patters shoul be removed when the front is conected to the backend
 const baseConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'api.slingacademy.com',
+        port: ''
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+        port: ''
+      },
+      {
+        protocol: 'https',
+        hostname: 'cloudflare-ipfs.com',
+        port: ''
+      },
+      {
+        protocol: 'https',
+        hostname: 'loremflickr.com',
+        port: ''
+      },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+        port: ''
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.pravatar.cc',
         port: ''
       }
     ]
