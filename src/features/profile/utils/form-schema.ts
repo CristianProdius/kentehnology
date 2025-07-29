@@ -1,39 +1,100 @@
 import * as z from 'zod';
 
-export const profileSchema = z.object({
-  firstname: z
+const MAX_FILE_SIZE = 5000000; // 5MB
+const ACCEPTED_IMAGE_TYPES = [
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/webp'
+];
+
+export const clientSchema = z.object({
+  // Avatar is optional
+  avatar: z
+    .any()
+    .optional()
+    .refine(
+      (files) =>
+        !files || files?.length === 0 || files?.[0]?.size <= MAX_FILE_SIZE,
+      `Max file size is 5MB.`
+    )
+    .refine(
+      (files) =>
+        !files ||
+        files?.length === 0 ||
+        ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+      '.jpg, .jpeg, .png and .webp files are accepted.'
+    ),
+
+  // Basic Information
+  name: z
     .string()
-    .min(3, { message: 'Product Name must be at least 3 characters' }),
-  lastname: z
-    .string()
-    .min(3, { message: 'Product Name must be at least 3 characters' }),
+    .min(2, { message: 'Client name must be at least 2 characters' })
+    .max(100, { message: 'Client name must not exceed 100 characters' }),
+
   email: z
     .string()
-    .email({ message: 'Product Name must be at least 3 characters' }),
-  contactno: z.coerce.number(),
-  country: z.string().min(1, { message: 'Please select a category' }),
-  city: z.string().min(1, { message: 'Please select a category' }),
-  // jobs array is for the dynamic fields
-  jobs: z.array(
-    z.object({
-      jobcountry: z.string().min(1, { message: 'Please select a category' }),
-      jobcity: z.string().min(1, { message: 'Please select a category' }),
-      jobtitle: z
-        .string()
-        .min(3, { message: 'Product Name must be at least 3 characters' }),
-      employer: z
-        .string()
-        .min(3, { message: 'Product Name must be at least 3 characters' }),
-      startdate: z
-        .string()
-        .refine((value) => /^\d{4}-\d{2}-\d{2}$/.test(value), {
-          message: 'Start date should be in the format YYYY-MM-DD'
-        }),
-      enddate: z.string().refine((value) => /^\d{4}-\d{2}-\d{2}$/.test(value), {
-        message: 'End date should be in the format YYYY-MM-DD'
-      })
-    })
-  )
+    .email({ message: 'Please enter a valid email address' })
+    .max(255, { message: 'Email must not exceed 255 characters' }),
+
+  phone: z
+    .string()
+    .min(10, { message: 'Phone number must be at least 10 characters' })
+    .max(20, { message: 'Phone number must not exceed 20 characters' })
+    .regex(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/, {
+      message: 'Please enter a valid phone number'
+    }),
+
+  // Company Information
+  company: z
+    .string()
+    .min(2, { message: 'Company name must be at least 2 characters' })
+    .max(100, { message: 'Company name must not exceed 100 characters' }),
+
+  industry: z
+    .string()
+    .min(1, { message: 'Please select an industry' })
+    .refine(
+      (value) =>
+        [
+          'Technology',
+          'Healthcare',
+          'Finance',
+          'Retail',
+          'Manufacturing',
+          'Education',
+          'Real Estate',
+          'Consulting'
+        ].includes(value),
+      { message: 'Please select a valid industry' }
+    ),
+
+  status: z
+    .string()
+    .min(1, { message: 'Please select a status' })
+    .refine(
+      (value) => ['Active', 'Inactive', 'Pending', 'Lead'].includes(value),
+      { message: 'Please select a valid status' }
+    )
 });
 
-export type ProfileFormValues = z.infer<typeof profileSchema>;
+export type ClientFormValues = z.infer<typeof clientSchema>;
+
+// You can also export the options as constants
+export const INDUSTRY_OPTIONS = [
+  'Technology',
+  'Healthcare',
+  'Finance',
+  'Retail',
+  'Manufacturing',
+  'Education',
+  'Real Estate',
+  'Consulting'
+] as const;
+
+export const STATUS_OPTIONS = [
+  'Active',
+  'Inactive',
+  'Pending',
+  'Lead'
+] as const;

@@ -1,13 +1,15 @@
 import { NavItem } from '@/types';
 
-export type Product = {
-  photo_url: string;
+export type Client = {
+  avatar_url: string;
   name: string;
-  description: string;
+  email: string;
+  phone: string;
+  company: string;
   created_at: string;
-  price: number;
   id: number;
-  category: string;
+  industry: string;
+  status: string;
   updated_at: string;
 };
 
